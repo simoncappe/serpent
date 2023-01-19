@@ -10,12 +10,12 @@ void screen_clear()
     std::cout << "\e[?25l";
 }
 
-void screen_draw_board(const std::map<std::pair<int,int>,bool> &board)
+void screen_draw_board(const std::map<std::pair<int,int>, int> &board)
 {
-    for (std::pair<const std::pair<int, int>, bool> element : board)
+    for (std::pair<const std::pair<int, int>, int> element : board)
     {
         std::pair<int, int> coords = element.first;
-        bool bdummy = element.second;
+        int value = element.second;
         int x = coords.first;
         int y = coords.second;
 
@@ -23,8 +23,16 @@ void screen_draw_board(const std::map<std::pair<int,int>,bool> &board)
         // (1,1) en haut a gauche
         // x = row, y = column
         std::cout << "\x1b["<<x << ";"<< y <<";H";
-        std::cout << "*";
-
+        
+        switch (value)
+        {
+            case 1:
+                std::cout << "*";
+                break;
+            case 2:
+                std::cout << "A";
+                break;
+        }
     }
 
     std::cout << std::flush;

@@ -11,12 +11,12 @@ include_directories("./includes")
 FILE(GLOB mainSources *.cpp)
 FILE(GLOB cppSources cpp/*.cpp)
 
-add_executable (snake
+add_executable (serpent
         ${mainSources}
         ${cppSources}
 )
 
-target_include_directories(snake PUBLIC
+target_include_directories(serpent PUBLIC
         "${PROJECT_SOURCE_DIR}/includes")
         
 
