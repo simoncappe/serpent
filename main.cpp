@@ -115,7 +115,7 @@ int main(int, char **)
             // y++;
         }
 
-        if (ellapsedms > 200)
+        if (ellapsedms > 500)
         {
             queue[0] = std::make_pair(x, y);
             for (int i = 0; i < m - 1; i++)
@@ -159,26 +159,19 @@ int main(int, char **)
             queue.push_back(std::make_pair(z, t));
             p = 0;
         }
-        
-        
-        //Game over si le serpent se recoupe
         m=queue.size();
         if(t>m+1){
             for(int k = 1;k<m;k++){
                 if(x==queue[k].first && y == queue[k].second){
                     b=false;
-                    
                 }
             }
         }
     }
-    
-    
-    
     std::cout<<"_____________________________________________________"<<std::endl;
 
     keyboard_end();
-    std::cout<<" G A M E  O V E R"<<std::endl;
+    std::cout<<" G A M E O V E R";
 
     // std::cout<<"GAME OVER"<<std::endl;
 }
