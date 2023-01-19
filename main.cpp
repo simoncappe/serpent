@@ -1,6 +1,8 @@
 #include <iostream>
 #include <thread>
 #include <chrono>
+#include <random>
+#include <algorithm>
 
 #include "snake.h"
 #include "screen.h"
@@ -45,7 +47,7 @@ int main(int, char **)
     keyboard_init();
 
     int x = 0, y = 0;
-    int n = 15;
+    int n = 20;
     std::vector<std::pair<int, int>> queue;
     for (int k = 0; k < n; k++)
     {
@@ -55,6 +57,16 @@ int main(int, char **)
     int p = 0;
     int t = 0;
     bool b = true;
+
+    std::random_device rd;
+    std::mt19937 gen_x(rd());
+    std::uniform_int_distribution<> distrib_x(1, 9);
+
+    std::mt19937 gen_y(rd());
+    std::uniform_int_distribution<> distrib_y(1, 49);
+    int score =0;
+
+    int x_pomme = distrib_x(gen_x), y_pomme = distrib_y(gen_y);
 
     while (b)
     {
@@ -66,7 +78,7 @@ int main(int, char **)
         screen_clear();
         board_clear(snake_board);
 
-        board_set_apple(snake_board, 5, 5);
+        board_set_apple(snake_board, x_pomme, y_pomme);
 
         for (auto pos : queue)
         {
@@ -119,7 +131,7 @@ int main(int, char **)
         }
 
         //mise à jour de position
-        if (ellapsedms > 500)
+        if (ellapsedms > 200)
         {
             queue[0] = std::make_pair(x, y);
             queue[0] = std::make_pair(x, y);
@@ -159,16 +171,27 @@ int main(int, char **)
         }
 
         //grandissement de la queue
-        if (p >= 20)
+        
+        if (x_pomme==x && y_pomme==y)
         {
+            score++;
             int z = queue[m - 1].first;
             int t = queue[m - 1].second;
             queue.push_back(std::make_pair(z, t));
             p = 0;
+            x_pomme = distrib_x(gen_x);
+            y_pomme = distrib_y(gen_y);
+
+            while (std::count(queue.begin(), queue.end(), std::make_pair(x_pomme, y_pomme)) != 0)
+            {
+                x_pomme = distrib_x(gen_x);
+                y_pomme = distrib_y(gen_y);
+            }
         }
+
         m=queue.size();
         //game over
-        if(t>m+1){
+        if(t>2){
             for(int k = 1;k<m;k++){
                 if(x==queue[k].first && y == queue[k].second){
                     b=false;
@@ -178,9 +201,8 @@ int main(int, char **)
     }
 
     keyboard_end();
-    std::cout<<";\n";
-    std::cout<<" G A M E O V E R"<<std::endl;
-
-    // std::cout<<"GAME OVER"<<std::endl;
+    std::cout<<"\n";
+    std::cout<<"GAME OVER"<<std::endl;
+    std::cout<<"Score: "<<score<<std::endl;
     }
 
