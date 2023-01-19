@@ -45,8 +45,10 @@ int main(int, char **)
     keyboard_init();
 
     int x = 0, y = 0;
-    int n = 2;
+    int n = 15;
     std::vector<std::pair<int, int>> queue;
+    for (int k = 0; k < n; k++)
+    {
     for (int k = 0; k < n; k++)
     {
         queue.push_back(std::make_pair(0, 0));
@@ -59,6 +61,7 @@ int main(int, char **)
     {
 
         int m = queue.size();
+
 
         // Affichage de la scène
         screen_clear();
@@ -119,6 +122,7 @@ int main(int, char **)
         if (ellapsedms > 500)
         {
             queue[0] = std::make_pair(x, y);
+            queue[0] = std::make_pair(x, y);
             for (int i = 0; i < m - 1; i++)
             {
                 queue[m - 1 - i] = std::make_pair(queue[m - i - 2].first, queue[m - i - 2].second);
@@ -151,6 +155,9 @@ int main(int, char **)
             queue[0] = std::make_pair(x, y);
             p += 1;
             t += 1;
+            queue[0] = std::make_pair(x, y);
+            p += 1;
+            t += 1;
         }
 
         if (p >= 20)
@@ -159,8 +166,36 @@ int main(int, char **)
             int t = queue[m - 1].second;
             queue.push_back(std::make_pair(z, t));
             p = 0;
+
+        if (p >= 20)
+        {
+            int z = queue[m - 1].first;
+            int t = queue[m - 1].second;
+            queue.push_back(std::make_pair(z, t));
+            p = 0;
         }
+        
+        
+        //Game over si le serpent se recoupe
+        m=queue.size();
+        if(t>m+1){
+            for(int k = 1;k<m;k++){
+                if(x==queue[k].first && y == queue[k].second){
+                    b=false;
+                    
+                }
+            }
+        }
+    }
+    
+    
+    
+    std::cout<<"_____________________________________________________"<<std::endl;
+
     }
 
     keyboard_end();
+    std::cout<<" G A M E  O V E R"<<std::endl;
+
+    // std::cout<<"GAME OVER"<<std::endl;
 }

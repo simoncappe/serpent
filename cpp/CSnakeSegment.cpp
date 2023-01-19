@@ -9,7 +9,7 @@ CSnakeSegment::CSnakeSegment(/* args */)
 
 CSnakeSegment::~CSnakeSegment()
 {
-    std::cout << "Le destructeur a été appelé" << std::endl;
+   // std::cout << "Le destructeur a été appelé" << std::endl;
 }
 
 void CSnakeSegment::change_colour()
