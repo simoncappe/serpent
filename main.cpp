@@ -49,8 +49,6 @@ int main(int, char **)
     std::vector<std::pair<int, int>> queue;
     for (int k = 0; k < n; k++)
     {
-    for (int k = 0; k < n; k++)
-    {
         queue.push_back(std::make_pair(0, 0));
     }
     std::chrono::steady_clock::time_point last_move = std::chrono::steady_clock::now();
@@ -120,6 +118,7 @@ int main(int, char **)
             direction = 3;
         }
 
+        //mise à jour de position
         if (ellapsedms > 500)
         {
             queue[0] = std::make_pair(x, y);
@@ -156,18 +155,10 @@ int main(int, char **)
             queue[0] = std::make_pair(x, y);
             p += 1;
             t += 1;
-            queue[0] = std::make_pair(x, y);
-            p += 1;
-            t += 1;
+            
         }
 
-        if (p >= 20)
-        {
-            int z = queue[m - 1].first;
-            int t = queue[m - 1].second;
-            queue.push_back(std::make_pair(z, t));
-            p = 0;
-
+        //grandissement de la queue
         if (p >= 20)
         {
             int z = queue[m - 1].first;
@@ -176,6 +167,7 @@ int main(int, char **)
             p = 0;
         }
         m=queue.size();
+        //game over
         if(t>m+1){
             for(int k = 1;k<m;k++){
                 if(x==queue[k].first && y == queue[k].second){
@@ -184,12 +176,11 @@ int main(int, char **)
             }
         }
     }
-    std::cout<<"_____________________________________________________"<<std::endl;
-
-    }
 
     keyboard_end();
-    std::cout<<" G A M E O V E R";
+    std::cout<<";\n";
+    std::cout<<" G A M E O V E R"<<std::endl;
 
     // std::cout<<"GAME OVER"<<std::endl;
-}
+    }
+
