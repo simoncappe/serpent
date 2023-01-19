@@ -47,7 +47,7 @@ int main(int, char **)
     keyboard_init();
 
     int x = 0, y = 0;
-    int n = 20;
+    int n = 2;
     std::vector<std::pair<int, int>> queue;
     for (int k = 0; k < n; k++)
     {
