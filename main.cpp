@@ -56,8 +56,9 @@ int main(int, char **)
     std::chrono::steady_clock::time_point last_move = std::chrono::steady_clock::now();
     int p = 0;
     int t = 0;
+    bool b = true;
 
-    while (true)
+    while (b)
     {
 
         int m = queue.size();
