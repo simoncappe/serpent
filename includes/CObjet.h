@@ -9,7 +9,7 @@ class Objet{
     public:
         Objet(){};
         ~Objet(){};
-        void maj();
+        void appear();
         std::pair<int,int> get_coord(int k);
 };
 
@@ -21,6 +21,7 @@ class serpent: public Objet{
         serpent();
         ~serpent();
         //void maj();
+        void appear();
         void agrandir();
 };
 
