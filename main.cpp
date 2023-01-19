@@ -14,7 +14,8 @@
 #define RIGHT_ARROW 67
 
 // Variables de contexte du board
-std::map<std::pair<int, int>, bool> snake_board;
+std::map<std::pair<int, int>, int> snake_board;
+
 
 // Variables de contexte du snake
 int snake_size = 5;
@@ -48,24 +49,30 @@ int main(int, char **)
     std::vector<std::pair<int, int>> queue;
     for (int k = 0; k < n; k++)
     {
+    for (int k = 0; k < n; k++)
+    {
         queue.push_back(std::make_pair(0, 0));
     }
     std::chrono::steady_clock::time_point last_move = std::chrono::steady_clock::now();
     int p = 0;
     int t = 0;
     bool b = true;
+
     while (b)
     {
 
         int m = queue.size();
 
+
         // Affichage de la scène
         screen_clear();
         board_clear(snake_board);
 
+        board_set_apple(snake_board, 5, 5);
+
         for (auto pos : queue)
         {
-            board_set_pixel(snake_board, pos.first, pos.second);
+            board_set_snake(snake_board, pos.first, pos.second);
         }
 
         screen_draw_board(snake_board);
@@ -74,8 +81,9 @@ int main(int, char **)
         std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
 
         ellapsedms = (long)std::chrono::duration_cast<std::chrono::milliseconds>(end - last_move).count();
-        
 
+
+        // Gestion des bords (le serpent réapparaît à l'opposé)
         if (x >= 9)
         {
             x = 1;
@@ -92,31 +100,29 @@ int main(int, char **)
         {
             y = 49;
         }
+
         int direction;
         int key_scan = keyboard_scan();
         if (key_scan == UP_ARROW)
         {
             direction = 0;
-            // x--;
         }
         else if (key_scan == DOWN_ARROW)
         {
             direction = 1;
-            // x++;
         }
         else if (key_scan == LEFT_ARROW)
         {
             direction = 2;
-            // y--;
         }
         else if (key_scan == RIGHT_ARROW)
         {
             direction = 3;
-            // y++;
         }
 
         if (ellapsedms > 500)
         {
+            queue[0] = std::make_pair(x, y);
             queue[0] = std::make_pair(x, y);
             for (int i = 0; i < m - 1; i++)
             {
@@ -150,7 +156,17 @@ int main(int, char **)
             queue[0] = std::make_pair(x, y);
             p += 1;
             t += 1;
+            queue[0] = std::make_pair(x, y);
+            p += 1;
+            t += 1;
         }
+
+        if (p >= 20)
+        {
+            int z = queue[m - 1].first;
+            int t = queue[m - 1].second;
+            queue.push_back(std::make_pair(z, t));
+            p = 0;
 
         if (p >= 20)
         {
@@ -169,6 +185,8 @@ int main(int, char **)
         }
     }
     std::cout<<"_____________________________________________________"<<std::endl;
+
+    }
 
     keyboard_end();
     std::cout<<" G A M E O V E R";
